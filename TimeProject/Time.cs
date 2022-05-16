@@ -79,9 +79,9 @@ namespace TimeProject
         public override bool Equals([NotNullWhen(true)] object? obj)
         {
             if (obj == null)
-                throw new ArgumentNullException(nameof(obj));
+                return false;
             if (obj is not Time)
-                throw new ArgumentException();
+                return false;
             return Equals((Time)obj);
         }
         public int CompareTo(Time other)
