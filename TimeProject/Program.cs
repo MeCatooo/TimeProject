@@ -3,6 +3,6 @@ using TimeProject;
 
 //Console.WriteLine("Hello, World!");
 Time time = new Time(1, 1, 1);
-Time time1 = new Time(1, 11, 10);
-TimePeriod TimePeriod = new TimePeriod();
+Time time1 = new Time(11, 1, 1);
+TimePeriod TimePeriod = new TimePeriod(time,time1);
 Console.WriteLine(TimePeriod.ToString());

@@ -83,7 +83,7 @@ namespace TimeTest
         public void TimePlus(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, time.TimePlus(time1));
         }
@@ -95,7 +95,7 @@ namespace TimeTest
         public void TimeSubstraction(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, time.TimeSubstract(time1));
         }
@@ -107,7 +107,7 @@ namespace TimeTest
         public void StaticTimePlus(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, Time.TimePlus(time, time1));
         }
@@ -119,7 +119,7 @@ namespace TimeTest
         public void StaticTimeSubstraction(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, Time.TimeSubstract(time, time1));
         }
@@ -131,7 +131,7 @@ namespace TimeTest
         public void OperatorTimePlus(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, time + time1);
         }
@@ -143,7 +143,7 @@ namespace TimeTest
         public void OperatorTimeSubstraction(int a, int b, int c, int a1, int b1, int c1, int expectedA, int expectedB, int expectedC)
         {
             Time time = new Time((byte)a, (byte)b, (byte)c);
-            Time time1 = new Time((byte)a1, (byte)b1, (byte)c1);
+            TimePeriod time1 = new TimePeriod((byte)a1, (byte)b1, (byte)c1);
             Time expected = new Time((byte)expectedA, (byte)expectedB, (byte)expectedC);
             Assert.AreEqual(expected, time - time1);
         }

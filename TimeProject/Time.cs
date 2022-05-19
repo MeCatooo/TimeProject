@@ -12,6 +12,9 @@ namespace TimeProject
         private readonly byte hours = 0;
         private readonly byte minutes = 0;
         private readonly byte seconds = 0;
+        /// <summary>
+        /// Zwraca reprezentację godzin.
+        /// </summary>
         public byte Hours
         {
             get { return hours; }
@@ -22,6 +25,9 @@ namespace TimeProject
                 hours = value;
             }
         }
+        /// <summary>
+        /// Zwraca reprezentację minut.
+        /// </summary>
         public byte Minutes
         {
             get { return minutes; }
@@ -32,6 +38,9 @@ namespace TimeProject
                 minutes = value;
             }
         }
+        /// <summary>
+        /// Zwraca reprezentację sekund.
+        /// </summary>
         public byte Seconds
         {
             get { return seconds; }
@@ -65,17 +74,30 @@ namespace TimeProject
             Minutes = dane[1];
             Seconds = dane[2];
         }
+        /// <summary>
+        /// Zwraca ciąg znaków przedstawiający punkt w czasie.
+        /// </summary>
+        /// <returns>String w postaci HH:MM:SS</returns>
         public override string ToString()
         {
             return $"{hours:00}:{minutes:00}:{seconds:00}";
         }
-
+        /// <summary>
+        /// Sprawdza równość wskazywanego punktu w czasie dla dwóch Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>bool</returns>
         public bool Equals(Time other)
         {
             if (other.Hours == Hours && other.Minutes == Minutes && other.Seconds == Seconds)
                 return true;
             return false;
         }
+        /// <summary>
+        /// Sprawdza równość wskazywanego punktu w czasie dla dwóch Time. Zwraca false dla innych typów.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>bool</returns>
         public override bool Equals([NotNullWhen(true)] object? obj)
         {
             if (obj == null)
@@ -84,6 +106,11 @@ namespace TimeProject
                 return false;
             return Equals((Time)obj);
         }
+        /// <summary>
+        /// Porównuje wskazywany punktu w czasie dla dwóch Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>bool</returns>
         public int CompareTo(Time other)
         {
             int localSum = Hours * 3600 + Minutes * 60 + Seconds;
@@ -118,11 +145,17 @@ namespace TimeProject
         {
             return a.CompareTo(b) >= 0;
         }
-        public static Time TimePlus(Time a, Time b)
+        /// <summary>
+        /// Dodaje podany TimePeriod do podanego Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>Time</returns>
+        public static Time TimePlus(Time a, TimePeriod b)
         {
-            int localHours = a.Hours + b.Hours;
-            int localMinutes = a.Minutes + b.Minutes;
-            int localSeconds = a.Seconds + b.Seconds;
+            int[] dane = Array.ConvertAll<string, int>(b.ToString().Split(":"), int.Parse);
+            int localHours = a.Hours + dane[0];
+            int localMinutes = a.Minutes + dane[1];
+            int localSeconds = a.Seconds + dane[2];
             if (localSeconds % 60 != 0)
             {
                 int add = (localSeconds - localSeconds % 60) / 60;
@@ -139,11 +172,17 @@ namespace TimeProject
                 localHours %= 24;
             return new Time((byte)localHours, (byte)localMinutes, (byte)localSeconds);
         }
-        public Time TimePlus(Time b)
+        /// <summary>
+        /// Dodaje podany TimePeriod do obecnego Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>Time</returns>
+        public Time TimePlus(TimePeriod b)
         {
-            int localHours = this.Hours + b.Hours;
-            int localMinutes = this.Minutes + b.Minutes;
-            int localSeconds = this.Seconds + b.Seconds;
+            int[] dane = Array.ConvertAll<string, int>(b.ToString().Split(":"), int.Parse);
+            int localHours = Hours + dane[0];
+            int localMinutes = Minutes + dane[1];
+            int localSeconds = Seconds + dane[2];
             if (localSeconds % 60 != 0)
             {
                 int add = (localSeconds - localSeconds % 60) / 60;
@@ -160,15 +199,21 @@ namespace TimeProject
                 localHours %= 24;
             return new Time((byte)localHours, (byte)localMinutes, (byte)localSeconds);
         }
-        public static Time operator +(Time a, Time b)
+        public static Time operator +(Time a, TimePeriod b)
         {
             return a.TimePlus(b);
         }
-        public static Time TimeSubstract(Time a, Time b)
+        /// <summary>
+        /// Odejmuje podany TimePeriod do podanego Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>Time</returns>
+        public static Time TimeSubstract(Time a, TimePeriod b)
         {
-            int localHours = a.Hours - b.Hours;
-            int localMinutes = a.Minutes - b.Minutes;
-            int localSeconds = a.Seconds - b.Seconds;
+            int[] dane = Array.ConvertAll<string, int>(b.ToString().Split(":"), int.Parse);
+            int localHours = a.Hours - dane[0];
+            int localMinutes = a.Minutes - dane[1];
+            int localSeconds = a.Seconds - dane[2];
             if (localSeconds < 0)
             {
                 localSeconds = 60 + localSeconds;
@@ -185,11 +230,17 @@ namespace TimeProject
             }
             return new Time((byte)localHours, (byte)localMinutes, (byte)localSeconds);
         }
-        public Time TimeSubstract(Time b)
+        /// <summary>
+        /// Odejmuje podany TimePeriod do obecnego Time.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns>Time</returns>
+        public Time TimeSubstract(TimePeriod b)
         {
-            int localHours = this.Hours - b.Hours;
-            int localMinutes = this.Minutes - b.Minutes;
-            int localSeconds = this.Seconds - b.Seconds;
+            int[] dane = Array.ConvertAll<string, int>(b.ToString().Split(":"), int.Parse);
+            int localHours = Hours - dane[0];
+            int localMinutes = Minutes - dane[1];
+            int localSeconds = Seconds - dane[2];
             if (localSeconds < 0)
             {
                 localSeconds = 60 + localSeconds;
@@ -206,7 +257,7 @@ namespace TimeProject
             }
             return new Time((byte)localHours, (byte)localMinutes, (byte)localSeconds);
         }
-        public static Time operator -(Time a, Time b)
+        public static Time operator -(Time a, TimePeriod b)
         {
             return a.TimeSubstract(b);
         }
